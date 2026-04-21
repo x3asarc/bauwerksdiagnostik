@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   { label: 'Experten Finden', href: '/bauwerksdiagnostiker-finden', id: '05' },
   { label: 'Mitgliedschaft', href: '/mitgliedschaft', id: '06' },
   { label: 'Kontakt', href: '/kontakt', id: '07' },
+  { label: 'Dokumentation', href: '/docs', id: '08' },
 ];
 
 export default function Sidebar() {

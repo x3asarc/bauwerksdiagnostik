@@ -11,6 +11,8 @@ import Kontakt from "@/pages/Kontakt";
 import Impressum from "@/pages/Impressum";
 import Datenschutzerklaerung from "@/pages/Datenschutzerklaerung";
 import Vorstandswahl2023 from "@/pages/Vorstandswahl2023";
+import DocsHub from "@/pages/DocsHub";
+import DocPage from "@/pages/DocPage";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -28,6 +30,8 @@ function Router() {
       <Route path={"/impressum"} component={Impressum} />
       <Route path={"/datenschutzerklaerung"} component={Datenschutzerklaerung} />
       <Route path={"/vorstandswahl-2023"} component={Vorstandswahl2023} />
+      <Route path={"/docs/:slug"} component={DocPage} />
+      <Route path={"/docs"} component={DocsHub} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
