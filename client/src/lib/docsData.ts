@@ -1,7 +1,9 @@
 /**
  * Docs Data Structure
- * Contains all documentation content with wikilink support
+ * Builds the wiki index from the imported ICP overhaul source files.
  */
+
+import { extractWikilinks } from './wikilinks';
 
 export interface DocPage {
   id: string;
@@ -14,153 +16,171 @@ export interface DocPage {
   relatedDocs?: Array<{ slug: string; title: string }>;
 }
 
-export const docsPages: Record<string, DocPage> = {
-  'competitive-analysis': {
-    id: 'competitive-analysis',
-    slug: 'competitive-analysis',
-    title: 'Competitive Analysis',
-    date: 'April 2, 2026',
-    scope: 'Direct and indirect competitors in German/EU building diagnostics, professional associations, certification bodies, and engineering services',
-    excerpt: 'Building diagnostics market landscape analysis covering 20+ direct competitors and 10+ indirect competitors in the German/EU market.',
-    content: `# Fachverband Bauwerksdiagnostik - Competitive Analysis
+const rawDocs = import.meta.glob('../../../docs-upload/icp-design-overhaul/**/*.{md,txt,html}', {
+  eager: true,
+  import: 'default',
+  query: '?raw',
+}) as Record<string, string>;
 
-## Phase 1c Research: Building Diagnostics Market Landscape
-
-**Date:** April 2, 2026
-**Scope:** Direct and indirect competitors in German/EU building diagnostics, professional associations, certification bodies, and engineering services
-**Geographic Focus:** Germany and EU markets
-**Related Research:** [[market-intelligence|Market Intelligence]], [[icp-persona|ICP Persona]], [[industry-standards|Industry Standards]]
-
----
-
-## Executive Summary
-
-The building diagnostics and professional services landscape in Germany/EU is dominated by:
-
-1. **Direct Competitors:** 20+ organizations offering building diagnostics, surveying, expert services, and NDT (Non-Destructive Testing)
-2. **Indirect Competitors:** 10+ major certification bodies, standards organizations, and engineering associations
-3. **Market Positioning:** High-competition space with clear specialization opportunities
-4. **Visual Language:** Dominated by blue color (80%+), sans-serif typography, minimalist grid-based layouts
-5. **Trust Strategy:** Multi-layered: certifications, member counts, longevity, government backing, formal credentials, transparency
-
-### Key Finding
-
-**The market has few organizations specifically focused solely on "building diagnostics" as a distinct discipline.** Most competitors have broader scope (general surveying, NDT across industries, all construction experts). This represents an **opportunity for Fachverband to differentiate through specialized positioning in building diagnostics.**
-
----
-
-## Part 1: Direct Competitors - Building Diagnostics & Expert Services
-
-### Tier 1: International/Pan-European Organizations
-
-#### **WTA International**
-- **Full Name:** Wissenschaftlich-Technische Arbeitsgemeinschaft für Bauwerkserhaltung und Denkmalpflege (International Association for Science and Technology of Building Maintenance and Monuments Preservation)
-- **Website:** https://www.wta-international.org/en/
-- **Positioning:** "Competence all over Europe" - Leading European authority on restoration and building maintenance
-- **Key Services:**
-  - Technical guidelines for building maintenance
-  - Research surveys and technical commissions
-  - Professional conferences (WTA-Days)
-  - Specialized focus: **Monument preservation and historical buildings**
-- **Membership:** European network across Germany, Netherlands, Flanders, Switzerland, Czechia
-- **Key Differentiator:** Strong research orientation, focus on historical/restoration aspects
-- **Visual Language:** Professional institutional design, moderate blue usage
-
-#### **RILEM (International)**
-- **Full Name:** International Union of Laboratories and Experts in Construction Materials, Systems and Structures
-- **Website:** https://www.rilem.net/
-- **Positioning:** Leader in sustainable construction and technical innovation
-- **Key Services:**
-  - Technical committees for materials/structures research
-  - Educational resources (MOOCs, Summer Schools)
-  - International conference hosting
-- **Membership:** 3,660 individual members, 124 corporate members
-- **Key Differentiator:** Strong academic/research focus, sustainability leadership
-- **Target:** Researchers, academics, engineers, corporations
-
-#### **RICS (Royal Institution of Chartered Surveyors)**
-- **Website:** https://www.rics.org/
-- **Positioning:** "World's leading professional body for qualifications and standards in land, property, infrastructure and construction"
-- **Scope:** Global, with presence in Germany and across Europe
-- **Key Services:**
-  - Professional standards and qualifications
-  - Find a surveyor directory
-  - Dispute resolution services
-  - Sector-specific standards (Red Book, Black Book)
-- **Membership:** 40,000+ surveying firms globally
-- **Key Differentiator:** Global reach and recognition, royal charter, consumer-facing approach
-- **Target:** Surveying professionals, consumers, property investors
-
-### Tier 2: German National Associations - Building Experts & Surveyors
-
-#### **BVS (Bundesverband öffentlich bestellter und vereidigter sowie qualifizierter Sachverständiger)**
-- **English:** Federal Association of Publicly Appointed and Sworn Experts
-- **Website:** https://www.bvs-ev.de/
-- **Positioning:** "Mit Verstand zur Sache" (Getting to the point with expertise) - Largest expert association in Germany
-- **Membership:** ~3,000 experts across 250+ subject areas
-- **Key Services:**
-  - Expert finder database
-  - Professional seminars and networking
-  - Member app (BVS App)
-  - Multi-sector coverage
-- **Key Differentiator:** Broadest scope (covers all expert categories), publicly appointed experts focus, largest member base
-- **Scope:** Covers experts across real estate, technical equipment, building, and more
-
-#### **BBauSV (Bundesverband Deutscher Bausachverständiger)**
-- **English:** Federal Association of German Building Experts
-- **Website:** https://bbausv.de/
-- **Positioning:** Emphasis on high qualifications and continuing education
-- **Key Services:**
-  - Expert directory (via Bundesliste e.V.)
-  - Educational conferences (Tegernseer Baufachtage)
-  - Professional magazine "Der Bausachverständige"
-  - Association seal (Verbandssiegel) for qualification standards
-- **Membership Value:** Right to use "Verbandssachverständige BBauSV" title
-- **Key Differentiator:** Strong continuing education focus, European representation (AEEBC member)
-- **Target:** Building experts, architects, engineers
-
----
-
-## Part 2: Indirect Competitors - Certification Bodies & Standards Organizations
-
-### Tier 1: Major Certification & Testing Organizations
-
-#### **TÜV SÜD**
-- **Website:** https://www.tuvsud.com/
-- **Positioning:** "Add value. Inspire trust. Together we engineer the future. - Construct safe, smart and sustainable buildings"
-- **Established:** 1866
-- **Key Services:**
-  - Testing, inspection, certification across building lifecycle
-  - ASME Certification & Inspections
-  - Insurance asset valuation
-  - Fire protection code compliance
-  - BIM training
-  - Infrared thermographic surveys
-- **Color Palette:** Blue + yellow accents (high-visibility) + white
-- **Typography:** Modern sans-serif, clean and technical
-- **Trust Signals:** 150+ years heritage, global presence, comprehensive lifecycle services
-- **Messaging:** Safety, sustainability, innovation-focused. Technical tone emphasizing risk minimization
-
----
-
-## Key Insights for Fachverband Positioning
-
-1. **Market Gap:** No organization exclusively focuses on "building diagnostics" as a distinct discipline
-2. **Differentiation Opportunity:** Specialized positioning in building diagnostics vs. broader surveying/NDT
-3. **Trust Signals:** Certification, member transparency, standards compliance, longevity
-4. **Visual Language:** Opportunity to stand out from blue-dominated market with distinct design
-5. **Member Value:** Expert registry, continuing education, professional standards, community
-
----
-
-*This document is part of Phase 1c research. Related docs: [[market-intelligence|Market Intelligence]], [[icp-persona|ICP Persona]], [[industry-standards|Industry Standards]]*`,
-    relatedDocs: [
-      { slug: 'market-intelligence', title: 'Market Intelligence' },
-      { slug: 'icp-persona', title: 'ICP Persona' },
-      { slug: 'industry-standards', title: 'Industry Standards' },
-    ],
-  },
+const titleOverrides: Record<string, string> = {
+  'building-diagnostics-design-system-plan': 'Building Diagnostics Design System Plan',
+  'design-direction-completion-summary': 'Design Direction Completion Summary',
+  'building-diagnostics-competitive-analysis': 'Building Diagnostics Competitive Analysis',
+  'building-diagnostics-standards-landscape': 'Building Diagnostics Standards Landscape',
+  'dach-building-diagnostics-market-intelligence': 'DACH Building Diagnostics Market Intelligence',
+  'independent-diagnostics-persona': 'Independent Diagnostics Persona',
+  'trusted-technical-brand-voice': 'Trusted Technical Brand Voice',
+  'building-diagnostics-visual-benchmark': 'Building Diagnostics Visual Benchmark',
+  'practitioner-site-experience-audit': 'Practitioner Site Experience Audit',
+  'trusted-association-design-systems-review': 'Trusted Association Design Systems Review',
+  'expert-alignment-deep-dive': 'Expert Alignment Deep Dive',
+  'pretext-alignment-summary': 'Pretext Alignment Summary',
+  'pretext-capability-review': 'Pretext Capability Review',
+  'pretext-icp-alignment': 'Pretext ICP Alignment',
+  'accessibility-compliance-report': 'Accessibility Compliance Report',
+  'building-diagnostics-color-directions': 'Building Diagnostics Color Directions',
+  'color-direction-summary': 'Color Direction Summary',
+  'dach-diagnostics-palette-concepts': 'DACH Diagnostics Palette Concepts',
+  'direction-selection-status': 'Direction Selection Status',
+  'professional-trust-aesthetic-strategy': 'Professional Trust Aesthetic Strategy',
+  'trust-and-competence-color-psychology': 'Trust and Competence Color Psychology',
+  'clinical-precision-homepage-mockup': 'Clinical Precision Homepage Mockup',
+  'grounded-expertise-homepage-mockup': 'Grounded Expertise Homepage Mockup',
+  'mockup-comparison-guide': 'Mockup Comparison Guide',
+  'technical-authority-homepage-mockup': 'Technical Authority Homepage Mockup',
 };
+
+const scopeByFolder: Record<string, string> = {
+  '': 'ICP design overhaul synthesis and planning',
+  'building-diagnostics-market-research': 'ICP market research and target practitioner framing',
+  'practitioner-experience-audit': 'Trust, benchmark, and experience audit for the practitioner audience',
+  'pretext-editorial-alignment': 'Editorial alignment and knowledge-system fit for the future wiki',
+  'visual-system-directions': 'Visual direction, accessibility, and color system exploration',
+  'visual-system-directions/homepage-direction-mockups': 'Homepage mockup references for the wiki visual language',
+  'design-system-specifications': 'Design system specifications',
+  'rollout-documentation': 'Rollout documentation',
+};
+
+const sortWeightByFolder: Record<string, number> = {
+  '': 0,
+  'building-diagnostics-market-research': 1,
+  'practitioner-experience-audit': 2,
+  'visual-system-directions': 3,
+  'visual-system-directions/homepage-direction-mockups': 4,
+  'pretext-editorial-alignment': 5,
+  'design-system-specifications': 6,
+  'rollout-documentation': 7,
+};
+
+function slugToTitle(slug: string): string {
+  return titleOverrides[slug] ?? slug.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
+}
+
+function getRelativeDocPath(path: string): string {
+  return path.split('docs-upload/icp-design-overhaul/')[1]?.replace(/\\/g, '/') ?? path.replace(/\\/g, '/');
+}
+
+function getFolderKey(relativePath: string): string {
+  const parts = relativePath.split('/');
+  return parts.length > 1 ? parts.slice(0, -1).join('/') : '';
+}
+
+function toPlainText(content: string): string {
+  return content
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
+    .replace(/\[\[([^\]]+)\]\]/g, '$1')
+    .replace(/[#>*_`-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractTitle(relativePath: string, content: string): string {
+  const slug = relativePath.split('/').pop()?.replace(/\.(md|txt|html)$/i, '') ?? relativePath;
+  const markdownHeading = content.match(/^#\s+(.+)$/m)?.[1]?.trim();
+  const htmlTitle = content.match(/<title>([^<]+)<\/title>/i)?.[1]?.trim();
+  return markdownHeading || htmlTitle || slugToTitle(slug);
+}
+
+function extractDate(content: string): string | undefined {
+  return (
+    content.match(/\*\*Document Date:\*\*\s*(.+)$/m)?.[1]?.trim() ||
+    content.match(/\*\*Date:\*\*\s*(.+)$/m)?.[1]?.trim() ||
+    content.match(/^Date:\s*(.+)$/m)?.[1]?.trim()
+  );
+}
+
+function extractExcerpt(relativePath: string, content: string): string {
+  if (relativePath.endsWith('.html')) {
+    return `Reference mockup imported from ${slugToTitle(
+      relativePath.split('/').pop()?.replace(/\.html$/i, '') ?? 'html-doc',
+    )}.`;
+  }
+
+  const plain = toPlainText(content);
+  return plain.length > 180 ? `${plain.slice(0, 177).trimEnd()}...` : plain;
+}
+
+function normalizeContent(relativePath: string, content: string): string {
+  if (relativePath.endsWith('.html')) {
+    return `# ${extractTitle(relativePath, content)}\n\nOriginal mockup source imported for wiki reference.\n\n\`\`\`html\n${content.trim()}\n\`\`\``;
+  }
+
+  return content;
+}
+
+type DocSeed = Omit<DocPage, 'relatedDocs'>;
+
+const docSeeds: DocSeed[] = Object.entries(rawDocs)
+  .map(([path, rawContent]) => {
+    const relativePath = getRelativeDocPath(path);
+    const slug = relativePath.split('/').pop()?.replace(/\.(md|txt|html)$/i, '') ?? relativePath;
+    const scope = scopeByFolder[getFolderKey(relativePath)] ?? scopeByFolder[''];
+    const content = normalizeContent(relativePath, rawContent);
+
+    return {
+      id: slug,
+      slug,
+      title: extractTitle(relativePath, rawContent),
+      date: extractDate(rawContent),
+      scope,
+      excerpt: extractExcerpt(relativePath, rawContent),
+      content,
+    };
+  })
+  .sort((a, b) => {
+    const aPath = Object.keys(rawDocs).find((path) => path.includes(`${a.slug}.`)) ?? a.slug;
+    const bPath = Object.keys(rawDocs).find((path) => path.includes(`${b.slug}.`)) ?? b.slug;
+    const aFolder = getFolderKey(getRelativeDocPath(aPath));
+    const bFolder = getFolderKey(getRelativeDocPath(bPath));
+    const weightDiff = (sortWeightByFolder[aFolder] ?? 99) - (sortWeightByFolder[bFolder] ?? 99);
+    return weightDiff !== 0 ? weightDiff : a.title.localeCompare(b.title);
+  });
+
+const titleBySlug = new Map(docSeeds.map((doc) => [doc.slug, doc.title]));
+
+export const docsPages: Record<string, DocPage> = Object.fromEntries(
+  docSeeds.map((doc) => {
+    const relatedDocs = Array.from(new Set(extractWikilinks(doc.content)))
+      .filter((slug) => titleBySlug.has(slug) && slug !== doc.slug)
+      .map((slug) => ({
+        slug,
+        title: titleBySlug.get(slug) ?? slugToTitle(slug),
+      }));
+
+    return [
+      doc.slug,
+      {
+        ...doc,
+        relatedDocs,
+      },
+    ];
+  }),
+);
 
 /**
  * Get all available doc slugs

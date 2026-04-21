@@ -1,0 +1,435 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction B: Clinical Precision - Fachverband Bauwerksdiagnostik</title>
+  <style>
+    :root {
+      --primary: #0C4A6E;           /* Deep teal-blue (clinical authority) */
+      --secondary: #7C3AED;         /* Vibrant purple (scientific accent) */
+      --accent: #0EA5E9;            /* Bright cyan (modern CTA) */
+      --status-critical: #EF4444;   /* Red */
+      --status-caution: #F97316;    /* Orange */
+      --status-safe: #10B981;       /* Green */
+      --background: #F0F9FF;        /* Cool off-white */
+      --foreground: #0F172A;        /* Very dark blue */
+      --border: #3B82F6;            /* Bright blue */
+      --muted: #64748B;             /* Slate gray */
+      --surface: #FFFFFF;           /* White */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Georgia', 'EB Garamond', serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .direction-label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Arial', 'Public Sans', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--secondary);
+      text-transform: uppercase;
+    }
+
+    section {
+      margin: 80px 0;
+      padding: 40px;
+      background-color: var(--surface);
+      border-left: 6px solid var(--primary);
+      border-radius: 4px;
+    }
+
+    section h2 {
+      font-family: 'Arial', 'Public Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Button Styles */
+    .button-group {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: 'Arial', 'Public Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 14px 32px;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-disabled {
+      background-color: var(--muted);
+      color: rgba(255, 255, 255, 0.6);
+      border: 2px solid var(--muted);
+      cursor: not-allowed;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: var(--surface);
+      border: 2px solid #E0E7FF;
+      border-left: 6px solid var(--primary);
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-left-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(12, 74, 110, 0.15);
+    }
+
+    .card-label {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--secondary);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: 'Arial', 'Public Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .card-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* Status Indicators */
+    .status-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .status-indicator {
+      padding: 20px;
+      border-left: 6px solid;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-radius: 0;
+    }
+
+    .status-critical {
+      background-color: #FEF2F2;
+      border-left-color: var(--status-critical);
+    }
+
+    .status-caution {
+      background-color: #FFF7ED;
+      border-left-color: var(--status-caution);
+    }
+
+    .status-safe {
+      background-color: #F0FDF4;
+      border-left-color: var(--status-safe);
+    }
+
+    .status-icon {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .status-critical .status-icon { color: var(--status-critical); }
+    .status-caution .status-icon { color: var(--status-caution); }
+    .status-safe .status-icon { color: var(--status-safe); }
+
+    .status-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .status-label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .status-critical .status-label { color: var(--status-critical); }
+    .status-caution .status-label { color: var(--status-caution); }
+    .status-safe .status-label { color: var(--status-safe); }
+
+    .status-description {
+      font-size: 14px;
+      color: var(--foreground);
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: var(--background);
+      border-top: 3px solid var(--primary);
+      padding: 40px;
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .color-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin: 30px 0;
+    }
+
+    .color-swatch {
+      padding: 20px;
+      text-align: center;
+      border-radius: 4px;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .color-name {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .color-hex {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="direction-label">PHASE_3D // DIRECTION_B</div>
+      <h1>Clinical Precision</h1>
+      <div class="subtitle">Blue-Forward Palette with Scientific Accent</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section>
+      <div class="direction-label">SEC_01 // HERO</div>
+      <h2>Die Bauwerksdiagnostik</h2>
+      <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">
+        Wissenschaftliche Analyse und Werterhaltung. Diese Richtung folgt medizinischen und klinischen
+        Standards mit tiefer Teal-Blau als PrimÃ¤rfarbe, unterstÃ¼tzt durch wissenschaftliche Purpur-Akzente.
+      </p>
+      <div class="button-group">
+        <button class="btn-primary">MITGLIEDSCHAFT BEANTRAGEN</button>
+        <button class="btn-outline">EXPERTEN REGISTER</button>
+        <button class="btn-disabled">WEITERE OPTION</button>
+      </div>
+    </section>
+
+    <!-- Cards Section -->
+    <section>
+      <div class="direction-label">SEC_02 // METHODS_GRID</div>
+      <h2>Diagnostische Verfahren</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">METHOD_01 // THERMAL</div>
+          <div class="card-title">Thermografie</div>
+          <div class="card-text">Infrarot-WÃ¤rmemessungen zur Erkennung von WÃ¤rmeverlusten und Feuchtigkeitsmustern mit klinischer Genauigkeit.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">METHOD_02 // MATERIAL</div>
+          <div class="card-title">Materialanalyse</div>
+          <div class="card-text">Laboruntersuchung von Baumaterialien auf Zusammensetzung und Eigenschaften nach wissenschaftlichen Standards.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">METHOD_03 // STRUCTURAL</div>
+          <div class="card-title">Strukturelle Bewertung</div>
+          <div class="card-text">PrÃ¼fung der statischen IntegritÃ¤t und Belastbarkeit von Bauelementen mit metrischer Dokumentation.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">METHOD_04 // MOISTURE</div>
+          <div class="card-title">Feuchtemessung</div>
+          <div class="card-text">PrÃ¤zisionsmessung von Feuchtigkeitswerten mit zertifizierten Instrumenten und QualitÃ¤tskontrolle.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">METHOD_05 // MOLD</div>
+          <div class="card-title">Schimmeluntersuchung</div>
+          <div class="card-text">Identifikation und Klassifizierung von biologischen Kontaminationen nach mikrobiologischen Normen.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">METHOD_06 // ENERGY</div>
+          <div class="card-title">Energieeffizienzanalyse</div>
+          <div class="card-text">Bewertung der Gesamtenergieeffizienz gemÃ¤ÃŸ EPBD-Standards und EU-Richtlinien.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Signals Section -->
+    <section>
+      <div class="direction-label">SEC_03 // STATUS_SIGNALS</div>
+      <h2>Befund-Klassifizierung</h2>
+      <p style="font-size: 14px; margin-bottom: 20px; color: var(--muted);">
+        Klinische Status-Signale ermÃ¶glichen schnelle EinschÃ¤tzung. Die Rot-Orange-GrÃ¼n-Palette folgt
+        medizinischen Diagnosestandards und ist fÃ¼r Farbenblinde unterscheidbar.
+      </p>
+      <div class="status-section">
+        <div class="status-indicator status-critical">
+          <div class="status-icon">âš </div>
+          <div class="status-text">
+            <div class="status-label">Kritisch</div>
+            <div class="status-description">Sofortige MaÃŸnahmen erforderlich. Schwerwiegender Schaden erkannt.</div>
+          </div>
+        </div>
+        <div class="status-indicator status-caution">
+          <div class="status-icon">!</div>
+          <div class="status-text">
+            <div class="status-label">Vorsicht</div>
+            <div class="status-description">ErhÃ¶htes Risiko. Ãœberwachung und MaÃŸnahmenplanung erforderlich.</div>
+          </div>
+        </div>
+        <div class="status-indicator status-safe">
+          <div class="status-icon">âœ“</div>
+          <div class="status-text">
+            <div class="status-label">Konform</div>
+            <div class="status-description">Akzeptable Bedingungen. Normale Wartung ausreichend.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color Reference Section -->
+    <section>
+      <div class="direction-label">SEC_04 // COLOR_REFERENCE</div>
+      <h2>Farbpalette</h2>
+      <div class="color-reference">
+        <div class="color-swatch" style="background-color: var(--primary);">
+          <div class="color-name">PrimÃ¤r</div>
+          <div class="color-hex">#0C4A6E</div>
+        </div>
+        <div class="color-swatch" style="background-color: var(--secondary);">
+          <div class="color-name">SekundÃ¤r</div>
+          <div class="color-hex">#7C3AED</div>
+        </div>
+        <div class="color-swatch" style="background-color: var(--accent);">
+          <div class="color-name">Akzent</div>
+          <div class="color-hex">#0EA5E9</div>
+        </div>
+        <div class="color-swatch" style="background-color: var(--status-critical);">
+          <div class="color-name">Kritisch</div>
+          <div class="color-hex">#EF4444</div>
+        </div>
+        <div class="color-swatch" style="background-color: var(--status-caution);">
+          <div class="color-name">Vorsicht</div>
+          <div class="color-hex">#F97316</div>
+        </div>
+        <div class="color-swatch" style="background-color: var(--status-safe);">
+          <div class="color-name">Konform</div>
+          <div class="color-hex">#10B981</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>FACHVERBAND BAUWERKSDIAGNOSTIK E.V.</p>
+      <p>VR 13937 â€¢ Registergericht â€¢ TÃœV SÃœD CERTIFIED</p>
+      <p style="margin-top: 16px; font-size: 11px;">
+        Direction B mockup generated for Phase 3d evaluation. Â© 2026
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
+<!-- Related Notes: [[building-diagnostics-color-directions]], [[trust-and-competence-color-psychology]], [[dach-diagnostics-palette-concepts]], [[accessibility-compliance-report]], [[professional-trust-aesthetic-strategy]], [[color-direction-summary]], [[direction-selection-status]], [[mockup-comparison-guide]], [[technical-authority-homepage-mockup]], [[grounded-expertise-homepage-mockup]], [[building-diagnostics-visual-benchmark]], [[practitioner-site-experience-audit]], [[independent-diagnostics-persona]], [[building-diagnostics-design-system-plan]] -->
+
+
