@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import Layout from '@/components/Layout';
-import { Search, FileText } from 'lucide-react';
-import { getAllDocPages } from '@/lib/docsData';
+import { Search, FileText, Beaker, Palette } from 'lucide-react';
+import { getAllDocPages, getDocsByCategory } from '@/lib/docsData';
 import { Link } from 'wouter';
 
 export default function DocsHub() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState<'all' | 'research' | 'design'>('all');
+  
   const allDocs = getAllDocPages();
+  const researchDocs = getDocsByCategory('research');
+  const designDocs = getDocsByCategory('design');
 
-  const filteredDocs = allDocs.filter(
+  const displayDocs = activeTab === 'research' ? researchDocs : activeTab === 'design' ? designDocs : allDocs;
+
+  const filteredDocs = displayDocs.filter(
     (doc) =>
       doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       doc.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
@@ -48,13 +54,46 @@ export default function DocsHub() {
         </div>
       </section>
 
+      {/* Tabs Section */}
+      <section className="px-8 py-6 bg-white border-b border-black">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex gap-px bg-black p-px">
+            {[
+              { id: 'all', label: 'Alle Dokumente', icon: FileText, count: allDocs.length },
+              { id: 'research', label: 'Forschung & Erkenntnisse', icon: Beaker, count: researchDocs.length },
+              { id: 'design', label: 'Design & System', icon: Palette, count: designDocs.length },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex-1 px-4 py-3 font-sans font-semibold uppercase tracking-wider text-sm transition-colors ${
+                  activeTab === tab.id
+                    ? 'bg-primary text-white'
+                    : 'bg-background text-foreground hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <tab.icon size={16} />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                  <span className="text-xs opacity-75">({tab.count})</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Docs Grid */}
       <section className="px-8 py-16 lg:py-24 bg-white">
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="space-y-2">
-            <p className="section-label">DOC: BWD_KNOWLEDGE_BASE_v1</p>
+            <p className="section-label">DOC: BWD_KNOWLEDGE_BASE_v2</p>
             <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Dokumentation ({filteredDocs.length})
+              {activeTab === 'research' && 'Forschung & Erkenntnisse'}
+              {activeTab === 'design' && 'Design & Systeme'}
+              {activeTab === 'all' && 'Dokumentation'}
+              {' '}({filteredDocs.length})
             </h2>
           </div>
 
@@ -70,7 +109,11 @@ export default function DocsHub() {
                 <Link key={doc.id} href={`/docs/${doc.slug}`}>
                   <a className="block bg-white border-2 border-black p-8 space-y-4 hover:bg-slate-50 transition-colors">
                     <div className="flex items-start gap-4">
-                      <FileText className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      {doc.category === 'research' ? (
+                        <Beaker className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      ) : (
+                        <Palette className="w-6 h-6 text-secondary flex-shrink-0 mt-1" />
+                      )}
                       <div className="flex-1 min-w-0">
                         <h3 className="text-2xl font-serif font-normal text-foreground mb-2">
                           {doc.title}
@@ -83,6 +126,15 @@ export default function DocsHub() {
                         <p className="text-base font-serif italic text-slate-700 line-clamp-2">
                           {doc.excerpt}
                         </p>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <span className={`text-xs font-sans font-semibold uppercase tracking-wider px-3 py-1 border border-black ${
+                          doc.category === 'research' 
+                            ? 'bg-blue-50 text-primary' 
+                            : 'bg-green-50 text-secondary'
+                        }`}>
+                          {doc.category === 'research' ? 'Forschung' : 'Design'}
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -97,28 +149,40 @@ export default function DocsHub() {
       <section className="px-8 py-16 lg:py-24 bg-background border-t border-black">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-2">
-            <p className="section-label">DOC: BWD_WIKI_INFO_v1</p>
+            <p className="section-label">DOC: BWD_WIKI_INFO_v2</p>
             <h2 className="text-3xl font-serif font-normal">
-              Über diese Dokumentation
+              Dokumentation organisiert
             </h2>
           </div>
 
-          <div className="space-y-6 text-base font-serif italic text-slate-700">
-            <p>
-              Diese Knowledge Base enthält Forschung, Analysen und technische Dokumentation für Fachverband Bauwerksdiagnostik. Alle Dokumente sind mit Wikilinks vernetzt, die es Ihnen ermöglichen, verwandte Inhalte schnell zu finden.
-            </p>
-
-            <div className="border-l-4 border-primary pl-6 py-4 bg-white">
-              <p className="font-sans font-bold uppercase tracking-wider text-primary mb-2">
-                Wikilink-Format
-              </p>
-              <p className="font-mono text-sm text-slate-600">
-                Verwenden Sie [[page-name]] oder [[page-name|Display Text]] um auf andere Dokumente zu verlinken.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black p-px">
+            <div className="bg-white border-2 border-black p-8 space-y-4">
+              <div className="flex items-center gap-3 mb-4">
+                <Beaker className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-serif font-normal">Forschung & Erkenntnisse</h3>
+              </div>
+              <p className="font-serif italic text-slate-700 text-sm">
+                Wettbewerbsanalyse, Marktforschung, ICP-Persona, Marktintelligenz und Branchenstandardlandschaft. Diese Dokumente bilden die Grundlage für alle Designentscheidungen.
               </p>
             </div>
 
-            <p>
-              Neue Dokumente werden regelmäßig hinzugefügt. Alle Inhalte folgen den Fachverband-Standards für Genauigkeit und Vollständigkeit.
+            <div className="bg-white border-2 border-black p-8 space-y-4">
+              <div className="flex items-center gap-3 mb-4">
+                <Palette className="w-6 h-6 text-secondary" />
+                <h3 className="text-xl font-serif font-normal">Design & Systeme</h3>
+              </div>
+              <p className="font-serif italic text-slate-700 text-sm">
+                Designsystempläne, Farbrichtungen, visuelle Benchmarks, Barrierefreiheitsberichte und ästhetische Strategien. Alle visuellen und interaktiven Richtlinien für die Fachverband-Plattform.
+              </p>
+            </div>
+          </div>
+
+          <div className="border-l-4 border-primary pl-6 py-4 bg-white">
+            <p className="font-sans font-bold uppercase tracking-wider text-primary mb-2">
+              Wikilink-Format
+            </p>
+            <p className="font-mono text-sm text-slate-600">
+              Verwenden Sie [[page-name]] oder [[page-name|Display Text]] um auf andere Dokumente zu verlinken.
             </p>
           </div>
         </div>

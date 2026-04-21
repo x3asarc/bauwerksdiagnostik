@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 
 interface NavItem {
   label: string;
@@ -21,6 +23,7 @@ const navItems: NavItem[] = [
 export default function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeId, setActiveId] = useState('01');
+  const { language, toggleLanguage } = useLanguage();
 
   return (
     <>
@@ -118,12 +121,38 @@ export default function Sidebar() {
           </ul>
         </nav>
 
+        {/* Language Toggle */}
+        <div style={{
+          padding: '12px',
+          border: '1px solid #000000',
+          background: '#FDFDFD',
+          marginBottom: '12px',
+          marginTop: 'auto',
+        }}>
+          <button
+            onClick={toggleLanguage}
+            className="w-full flex items-center justify-between gap-2 hover:bg-black hover:text-white transition-colors p-2"
+            style={{
+              fontFamily: "'Public Sans', sans-serif",
+              fontSize: '10px',
+              fontWeight: 900,
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              border: 'none',
+              background: 'transparent',
+              cursor: 'pointer',
+            }}
+          >
+            <Globe size={14} />
+            <span>{language === 'de' ? 'DE' : 'EN'}</span>
+          </button>
+        </div>
+
         {/* Status Widget */}
         <div style={{
           padding: '16px',
           border: '1px solid rgba(0,0,0,0.05)',
           background: '#FDFDFD',
-          marginTop: 'auto',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
             <span style={{
