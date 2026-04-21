@@ -27,7 +27,7 @@ export default function UeberUns() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <p className="section-label">SEC_02</p>
-            <h1 className="text-5xl lg:text-7xl font-serif font-normal leading-tight">
+            <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
               Ein interdisziplinäres Netzwerk für technische Exzellenz.
             </h1>
           </div>

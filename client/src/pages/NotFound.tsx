@@ -8,7 +8,7 @@ export default function NotFound() {
         <div className="max-w-4xl mx-auto space-y-8 text-center">
           <div className="space-y-4">
             <p className="text-8xl font-mono font-bold text-primary">404</p>
-            <h1 className="text-5xl lg:text-7xl font-serif font-normal leading-tight">
+            <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
               Seite nicht gefunden
             </h1>
           </div>
