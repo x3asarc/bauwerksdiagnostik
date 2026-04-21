@@ -64,7 +64,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <p className="section-label">SEC_01 // MISSION_VISION</p>
-            <h1 style={{ fontFamily: "'EB Garamond', serif", fontSize: '84px', fontWeight: 500, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
+            <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.01em' }} className="leading-tight">
               Die Bauwerksdiagnostik: Wissenschaftliche Analyse und Werterhaltung.
             </h1>
           </div>
