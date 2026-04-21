@@ -1,4 +1,4 @@
-import { Link } from 'wouter';
+
 import Layout from '@/components/Layout';
 import { Zap, Droplets, Wind, Layers, Scan, Leaf } from 'lucide-react';
 
@@ -64,7 +64,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <p className="section-label">SEC_01 // MISSION_VISION</p>
-            <h1 className="text-5xl lg:text-7xl font-serif font-normal leading-tight">
+            <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
               Die Bauwerksdiagnostik: Wissenschaftliche Analyse und Werterhaltung.
             </h1>
           </div>
@@ -74,16 +74,12 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link href="/bauwerksdiagnostiker-finden">
-              <a className="cta-button text-center">
-                Experten Register
-              </a>
-            </Link>
-            <Link href="/mitgliedschaft">
-              <a className="cta-button-outline text-center">
-                Mitgliedschaft Beantragen
-              </a>
-            </Link>
+            <a href="/bauwerksdiagnostiker-finden" className="btn-dossier-primary text-center">
+              EXPERTEN REGISTER
+            </a>
+            <a href="/mitgliedschaft" className="btn-dossier-outline text-center">
+              MITGLIEDSCHAFT BEANTRAGEN
+            </a>
           </div>
         </div>
       </section>
@@ -98,13 +94,13 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black p-px">
+          <div className="dossier-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             {diagnosticMethods.map((method) => {
               const Icon = method.icon;
               return (
                 <div
                   key={method.id}
-                  className="bg-white border-2 border-black p-8 space-y-4"
+                  className="dossier-grid-item space-y-4"
                 >
                   <Icon className="w-10 h-10 text-primary" strokeWidth={1.5} />
                   <h3 className="text-sm font-sans font-bold uppercase tracking-wider text-foreground">
@@ -130,11 +126,11 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="dossier-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
             {missionPillars.map((pillar, idx) => (
               <div
                 key={idx}
-                className="border-2 border-black p-8 space-y-4 bg-white"
+                className="dossier-grid-item space-y-4"
               >
                 <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-primary">
                   {pillar.title}
