@@ -74,10 +74,10 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <a href="/bauwerksdiagnostiker-finden" className="btn-dossier-primary text-center">
+            <a href="/bauwerksdiagnostiker-finden" className="btn-primary text-center">
               EXPERTEN REGISTER
             </a>
-            <a href="/mitgliedschaft" className="btn-dossier-outline text-center">
+            <a href="/mitgliedschaft" className="btn-outline text-center">
               MITGLIEDSCHAFT BEANTRAGEN
             </a>
           </div>
@@ -94,13 +94,13 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="dossier-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+          <div className="card-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             {diagnosticMethods.map((method) => {
               const Icon = method.icon;
               return (
                 <div
                   key={method.id}
-                  className="dossier-grid-item space-y-4"
+                  className="space-y-4" style={{ padding: '24px' }}
                 >
                   <Icon className="w-10 h-10 text-primary" strokeWidth={1.5} />
                   <h3 className="text-sm font-sans font-bold uppercase tracking-wider text-foreground">
@@ -126,11 +126,11 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="dossier-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+          <div className="card-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
             {missionPillars.map((pillar, idx) => (
               <div
                 key={idx}
-                className="dossier-grid-item space-y-4"
+                className="space-y-4" style={{ padding: '24px' }}
               >
                 <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-primary">
                   {pillar.title}

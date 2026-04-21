@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Layout from '@/components/Layout';
+import LeafletMap from '@/components/LeafletMap';
 import { MapPin, List, Search } from 'lucide-react';
 
 const members = [
@@ -67,6 +68,27 @@ const members = [
     email: 'katharina@example.de',
   },
 ];
+
+// Coordinates for German cities
+const cityCoordinates: Record<string, [number, number]> = {
+  'Dresden': [51.0504, 13.7373],
+  'Leipzig': [51.3397, 12.3731],
+  'Berlin': [52.5200, 13.4050],
+  'München': [48.1351, 11.5820],
+  'Hamburg': [53.5511, 9.9937],
+  'Köln': [50.9365, 6.9589],
+  'Stuttgart': [48.7758, 9.1829],
+};
+
+const mapMarkers = members.map((member) => ({
+  id: member.id,
+  lat: cityCoordinates[member.city]?.[0] || 51.1657,
+  lng: cityCoordinates[member.city]?.[1] || 10.4515,
+  name: member.name,
+  city: member.city,
+  specialization: member.specializations.join(', '),
+  phone: member.phone,
+}));
 
 export default function BauwerksdiagnostikerFinden() {
   const [view, setView] = useState<'map' | 'list'>('list');
@@ -139,6 +161,15 @@ export default function BauwerksdiagnostikerFinden() {
           </div>
         </div>
       </section>
+
+      {/* Map View */}
+      {view === 'map' && (
+        <section className="px-8 py-16 lg:py-24 bg-background">
+          <div className="max-w-6xl mx-auto">
+            <LeafletMap markers={mapMarkers} />
+          </div>
+        </section>
+      )}
 
       {/* List View */}
       {view === 'list' && (

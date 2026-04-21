@@ -4,18 +4,17 @@ import { Menu, X } from 'lucide-react';
 interface NavItem {
   label: string;
   href: string;
-  code: string;
   id: string;
 }
 
 const navItems: NavItem[] = [
-  { label: 'Mission & Vision', href: '/', code: 'SEC_01 // MISSION_VISION', id: '01' },
-  { label: 'Über Uns', href: '/ueber-uns', code: 'SEC_02 // ASSOCIATION_PROFILE', id: '02' },
-  { label: 'Expertise', href: '/expertise', code: 'SEC_03 // STANDARDS_MATRIX', id: '03' },
-  { label: 'Infos & Events', href: '/infos-events', code: 'SEC_04 // INFORMATION_ARCHIVE', id: '04' },
-  { label: 'Experten Finden', href: '/bauwerksdiagnostiker-finden', code: 'SEC_05 // EXPERT_REGISTRY', id: '05' },
-  { label: 'Mitgliedschaft', href: '/mitgliedschaft', code: 'SEC_06 // MEMBERSHIP_REGISTRY', id: '06' },
-  { label: 'Kontakt', href: '/kontakt', code: 'SEC_07 // CONTACT_TERMINAL', id: '07' },
+  { label: 'Mission & Vision', href: '/', id: '01' },
+  { label: 'Über Uns', href: '/ueber-uns', id: '02' },
+  { label: 'Expertise', href: '/expertise', id: '03' },
+  { label: 'Infos & Events', href: '/infos-events', id: '04' },
+  { label: 'Experten Finden', href: '/bauwerksdiagnostiker-finden', id: '05' },
+  { label: 'Mitgliedschaft', href: '/mitgliedschaft', id: '06' },
+  { label: 'Kontakt', href: '/kontakt', id: '07' },
 ];
 
 export default function Sidebar() {
@@ -35,60 +34,81 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-[280px] bg-white border-r border-black flex flex-col z-40 transition-transform duration-300 lg:translate-x-0 overflow-y-auto ${
+        className={`fixed left-0 top-0 h-screen w-[280px] bg-white flex flex-col z-40 transition-transform duration-300 lg:translate-x-0 overflow-y-auto ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ borderRight: '0.5px solid #000000' }}
+        style={{
+          borderRight: '0.5px solid #000000',
+          padding: '64px 32px',
+          minWidth: '280px',
+          position: 'sticky',
+          top: 0,
+        }}
       >
         {/* Logo Box */}
-        <div className="p-8 border-b border-black">
+        <div className="mb-8">
           <a href="/" className="block">
             <div
               className="w-10 h-10 border border-black flex items-center justify-center mb-4 hover:bg-black hover:text-white transition-colors"
+              style={{ borderRadius: 0 }}
             >
-              <span className="text-sm font-black tracking-tighter" style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '-0.025em' }}>
+              <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '14px', fontWeight: 900, letterSpacing: '-0.025em' }}>
                 FV<br />BWD
               </span>
             </div>
-            <p className="text-xs font-bold text-slate-400 tracking-widest" style={{ fontFamily: "'Public Sans', sans-serif" }}>
-              Master Dossier
-            </p>
           </a>
         </div>
 
         {/* DOCUMENT_INDEX Label */}
-        <div className="px-8 pt-8 pb-4">
-          <p className="text-xs font-black text-slate-300 tracking-widest" style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '0.4em' }}>
+        <div className="mb-10">
+          <p style={{
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: '10px',
+            fontWeight: 900,
+            color: '#D1D5DB',
+            letterSpacing: '0.4em',
+            textTransform: 'uppercase',
+            margin: 0,
+          }}>
             DOCUMENT_INDEX
           </p>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-0">
+        <nav className="flex-1 overflow-y-auto mb-8">
           <ul className="space-y-0">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="flex gap-4 px-8 py-3 transition-all duration-300"
+                  className="flex gap-4 py-3 transition-all duration-300"
                   style={{
                     borderLeft: activeId === item.id ? '1px solid #000000' : '1px solid transparent',
                     color: activeId === item.id ? '#000000' : '#94A3B8',
+                    marginLeft: '-32px',
+                    paddingLeft: '32px',
                   }}
                   onClick={() => {
                     setActiveId(item.id);
                     setMobileOpen(false);
                   }}
-                  onMouseEnter={() => {
+                  onMouseEnter={(e) => {
                     if (activeId !== item.id) {
-                      // Visual feedback on hover
+                      (e.target as HTMLElement).style.color = '#000000';
+                      (e.target as HTMLElement).style.borderLeftColor = 'rgba(0,0,0,0.2)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeId !== item.id) {
+                      (e.target as HTMLElement).style.color = '#94A3B8';
+                      (e.target as HTMLElement).style.borderLeftColor = 'transparent';
                     }
                   }}
                 >
-                  <span className="text-xs font-bold" style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: 'wider' }}>
+                  <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: 'wider' }}>
                     {item.id}
                   </span>
-                  <span className="text-xs font-black tracking-tight" style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '-0.025em' }}>
+                  <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '11px', fontWeight: 900, letterSpacing: '-0.025em' }}>
                     {item.label}
                   </span>
                 </a>
@@ -98,18 +118,51 @@ export default function Sidebar() {
         </nav>
 
         {/* Status Widget */}
-        <div className="border-t border-black p-4 space-y-3" style={{ background: '#FDFDFD', border: '1px solid rgba(0,0,0,0.05)' }}>
-          <p className="text-xs font-bold text-slate-400 tracking-widest" style={{ fontFamily: "'Public Sans', sans-serif", textTransform: 'uppercase' }}>
-            LOAD_STATUS:
-          </p>
-          <div className="flex items-center gap-2">
-            <div
-              className="w-1.5 h-1.5 rounded-full animate-pulse-dot"
-              style={{ background: '#0F4C81' }}
-            />
-            <span className="text-xs font-black text-primary tracking-tight" style={{ fontFamily: "'Public Sans', sans-serif", textTransform: 'uppercase' }}>
-              READY
+        <div style={{
+          padding: '16px',
+          border: '1px solid rgba(0,0,0,0.05)',
+          background: '#FDFDFD',
+          marginTop: 'auto',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <span style={{
+              fontFamily: "'Public Sans', sans-serif",
+              fontSize: '8px',
+              fontWeight: 700,
+              color: '#94A3B8',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+            }}>
+              LOAD_STATUS:
             </span>
+            <span style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              background: '#0F4C81',
+              animation: 'pulse 2s infinite',
+              display: 'inline-block',
+            }} />
+          </div>
+          <div style={{
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: '9px',
+            fontWeight: 900,
+            color: '#0F4C81',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}>
+            PRETEXT_ENGINE_READY
+          </div>
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '8px',
+            color: '#D1D5DB',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            marginTop: '8px',
+          }}>
+            REF: FV_BWD_2026.01
           </div>
         </div>
       </aside>
