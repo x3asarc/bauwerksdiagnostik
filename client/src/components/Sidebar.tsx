@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'wouter';
 import { Menu, X } from 'lucide-react';
 
 interface NavItem {
@@ -40,16 +39,14 @@ export default function Sidebar() {
       >
         {/* Logo/Header */}
         <div className="p-8 border-b border-black">
-          <Link href="/">
-            <a className="block">
-              <h1 className="text-sm font-sans font-bold uppercase tracking-wider text-primary">
-                Fachverband
-              </h1>
-              <p className="text-xs font-sans font-semibold uppercase tracking-wider text-slate-600 mt-1">
-                Bauwerksdiagnostik e.V.
-              </p>
-            </a>
-          </Link>
+          <a href="/" className="block">
+            <h1 className="text-sm font-sans font-bold uppercase tracking-wider text-primary">
+              Fachverband
+            </h1>
+            <p className="text-xs font-sans font-semibold uppercase tracking-wider text-slate-600 mt-1">
+              Bauwerksdiagnostik e.V.
+            </p>
+          </a>
         </div>
 
         {/* Navigation */}
@@ -57,19 +54,18 @@ export default function Sidebar() {
           <ul className="space-y-6">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href}>
-                  <a
-                    className="block group"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <span className="text-sm font-sans font-semibold uppercase tracking-wider text-foreground group-hover:text-primary transition-colors">
-                      {item.label}
-                    </span>
-                    <span className="text-xs font-mono text-slate-500 mt-1 block">
-                      {item.code}
-                    </span>
-                  </a>
-                </Link>
+                <a
+                  href={item.href}
+                  className="block group"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="text-sm font-sans font-semibold uppercase tracking-wider text-foreground group-hover:text-primary transition-colors">
+                    {item.label}
+                  </span>
+                  <span className="text-xs font-mono text-slate-500 mt-1 block">
+                    {item.code}
+                  </span>
+                </a>
               </li>
             ))}
           </ul>
