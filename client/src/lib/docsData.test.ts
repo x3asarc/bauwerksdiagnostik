@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getAvailableDocSlugs, getDocPage } from './docsData';
+import { getAvailableDocSlugs, getDocPage, getDocsByCategory } from './docsData';
 
 const expectedIcpOverhaulSlugs = [
   'building-diagnostics-design-system-plan',
@@ -34,19 +34,35 @@ describe('docsData ICP overhaul import', () => {
   it('exposes the full ICP overhaul documentation set', () => {
     const slugs = getAvailableDocSlugs();
 
-    expect(slugs).toHaveLength(expectedIcpOverhaulSlugs.length);
+    expect(slugs).toHaveLength(expectedIcpOverhaulSlugs.length + 1);
     expect(slugs).toEqual(expect.arrayContaining(expectedIcpOverhaulSlugs));
+    expect(slugs).toContain('competitive-analysis');
   });
 
   it('returns populated pages for the imported ICP overhaul docs', () => {
     const personaDoc = getDocPage('independent-diagnostics-persona');
     const mockupDoc = getDocPage('technical-authority-homepage-mockup');
+    const competitiveAnalysisDoc = getDocPage('competitive-analysis');
 
     expect(personaDoc).not.toBeNull();
     expect(personaDoc?.title).toContain('Persona');
     expect(personaDoc?.content.length).toBeGreaterThan(1000);
+    expect(personaDoc?.category).toBe('research');
 
     expect(mockupDoc).not.toBeNull();
     expect(mockupDoc?.content).toContain('<!DOCTYPE html>');
+
+    expect(competitiveAnalysisDoc).not.toBeNull();
+    expect(competitiveAnalysisDoc?.category).toBe('research');
+  });
+
+  it('separates research docs from design docs', () => {
+    const designDocs = getDocsByCategory('design');
+    const researchDocs = getDocsByCategory('research');
+
+    expect(designDocs.length).toBeGreaterThan(5);
+    expect(researchDocs.length).toBeGreaterThan(5);
+    expect(researchDocs.some((doc) => doc.slug === 'competitive-analysis')).toBe(true);
+    expect(designDocs.some((doc) => doc.slug === 'technical-authority-homepage-mockup')).toBe(true);
   });
 });

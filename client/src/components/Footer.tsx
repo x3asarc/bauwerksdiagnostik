@@ -5,9 +5,8 @@ export default function Footer() {
         borderTop: '4px solid #000000',
         marginTop: '160px',
         paddingTop: '40px',
-        marginLeft: 'calc(280px + 0px)',
       }}
-      className="px-8 lg:px-16 pb-16"
+      className="px-4 pb-16 sm:px-6 md:px-8 lg:px-16"
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">

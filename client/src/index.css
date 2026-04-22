@@ -215,6 +215,35 @@
     background: #FFFFFF;
   }
 
+  .docs-body {
+    font-family: 'EB Garamond', serif;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1.85;
+    color: #1A1A1A;
+    text-wrap: pretty;
+  }
+
+  .docs-body p,
+  .docs-body li,
+  .docs-body blockquote {
+    font-style: normal;
+  }
+
+  .docs-body strong {
+    font-weight: 600;
+  }
+
+  .docs-body :where(ul, ol) {
+    padding-left: 1.25rem;
+  }
+
+  .docs-body code,
+  .docs-body pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+  }
+
   /* Container */
   .container {
     width: 100%;

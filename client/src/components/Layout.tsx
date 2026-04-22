@@ -7,10 +7,10 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh', background: '#FDFDFD' }}>
+    <div className="min-h-screen bg-[#FDFDFD] lg:flex">
       <Sidebar />
-      <main style={{ flex: 1, marginLeft: '280px', width: 'calc(100% - 280px)' }} className="lg:ml-0 lg:w-full">
-        <div style={{ paddingTop: '128px', paddingBottom: '160px' }} className="md:pt-20">
+      <main className="min-w-0 flex-1 overflow-x-hidden pt-24 pb-32 lg:pl-[280px] lg:pt-0">
+        <div className="px-4 pt-20 sm:px-6 md:px-8 md:pt-24 lg:px-0 lg:pt-32 lg:pb-40">
           {children}
         </div>
         <Footer />
