@@ -7,7 +7,6 @@ export type Language = 'de' | 'en';
 
 export const translations = {
   de: {
-    // Navigation
     nav: {
       mission: 'Mission & Vision',
       about: 'Über Uns',
@@ -19,22 +18,24 @@ export const translations = {
       docs: 'Dokumentation',
     },
 
-    // Sidebar
     sidebar: {
       documentIndex: 'DOCUMENT_INDEX',
       language: 'Sprache',
       german: 'Deutsch',
       english: 'English',
+      loadStatus: 'LOAD_STATUS:',
+      ready: 'PRETEXT_ENGINE_READY',
     },
 
-    // Docs
     docs: {
-      title: 'Fachverband Knowledge Base',
-      subtitle: 'Forschung, Analysen und technische Dokumentation für Bauwerksdiagnostik-Fachleute. Querverweise mit Wikilinks für nahtlose Navigation.',
-      search: 'Dokumentation durchsuchen...',
-      allDocs: 'Alle Dokumente',
+      title: 'Fachverband Wissensarchiv',
+      subtitle:
+        'Fachliche Dokumentation, Analysen und Designreferenzen für die Bauwerksdiagnostik. Über Wikilinks bleiben Recherche und Gestaltung systematisch miteinander verbunden.',
+      searchResearch: 'Forschungsdokumente durchsuchen...',
+      searchDesign: 'Designdokumente durchsuchen...',
       research: 'Forschung & Erkenntnisse',
       design: 'Design & System',
+      documents: 'Dokumente',
       noResults: 'Keine Dokumente gefunden. Versuchen Sie eine andere Suchanfrage.',
       backToDocs: 'Zurück zur Dokumentation',
       relatedDocs: 'Verwandte Dokumentation',
@@ -44,14 +45,24 @@ export const translations = {
       pending: 'Ausstehend',
       open: 'Öffnen',
       about: 'Über diese Dokumentation',
-      aboutText: 'Diese Knowledge Base enthält Forschung, Analysen und technische Dokumentation für Fachverband Bauwerksdiagnostik. Alle Dokumente sind mit Wikilinks vernetzt.',
+      aboutText:
+        'Die obere Navigation trennt die Forschungs- und Strategiedokumente von den eigentlichen Design- und Systemreferenzen. So bleibt die Wissensbasis logisch sortiert, ohne die interne Verlinkung zu verlieren.',
       wikiLinkFormat: 'WIKILINK-FORMAT',
-      wikiLinkFormatText: 'Verwenden Sie [[page-name]] oder [[page-name|Display Text]] um auf andere Dokumente zu verlinken.',
-      researchDesc: 'Wettbewerbsanalyse, Marktforschung, ICP-Persona, Marktintelligenz und Branchenstandardlandschaft. Diese Dokumente bilden die Grundlage für alle Designentscheidungen.',
-      designDesc: 'Designsystempläne, Farbrichtungen, visuelle Benchmarks, Barrierefreiheitsberichte und ästhetische Strategien. Alle visuellen und interaktiven Richtlinien für die Fachverband-Plattform.',
+      wikiLinkFormatText:
+        'Verwenden Sie zum Beispiel [[competitive-analysis]] oder [[independent-diagnostics-persona|Independent Diagnostics Persona]], um auf andere Dokumente zu verlinken.',
+      topicsText:
+        'Die Themenchips oberhalb der Suche zeigen die inhaltlichen Cluster des aktiven Bereichs. Damit lässt sich die Design-Wiki schnell vom Forschungsbestand abgrenzen.',
+      researchHeading: 'Forschung & Erkenntnisse',
+      designHeading: 'Design & System',
+      notFound: 'Dokument nicht gefunden',
+      notFoundBody: 'Das angeforderte Dokument existiert nicht.',
+      area: 'Bereich',
+      date: 'Datum',
+      scope: 'Umfang',
+      displayedAs: 'Angezeigt als',
+      allTopics: 'Themen',
     },
 
-    // Home
     home: {
       missionVision: 'Die Bauwerksdiagnostik: Wissenschaftliche Analyse und Werterhaltung.',
       diagnosticMethods: 'Diagnostische Methoden',
@@ -59,25 +70,21 @@ export const translations = {
       marketStats: 'Marktstatistiken',
     },
 
-    // About
     about: {
       title: 'Über Fachverband Bauwerksdiagnostik',
     },
 
-    // Expertise
     expertise: {
       title: 'Unsere Expertise',
       standards: 'Standards & Zertifizierungen',
     },
 
-    // Membership
     membership: {
       title: 'Mitgliedschaft',
       tiers: 'Mitgliedschaftsstufen',
       apply: 'Jetzt beitreten',
     },
 
-    // Contact
     contact: {
       title: 'Kontakt',
       form: 'Kontaktformular',
@@ -87,7 +94,6 @@ export const translations = {
       message: 'Nachricht',
     },
 
-    // Footer
     footer: {
       downloads: 'DOWNLOADS',
       legal: 'LEGAL_RECORDS',
@@ -96,7 +102,6 @@ export const translations = {
       archive: 'ARCHIVE',
     },
 
-    // Common
     common: {
       loading: 'Wird geladen...',
       error: 'Ein Fehler ist aufgetreten',
@@ -106,7 +111,6 @@ export const translations = {
   },
 
   en: {
-    // Navigation
     nav: {
       mission: 'Mission & Vision',
       about: 'About Us',
@@ -118,22 +122,24 @@ export const translations = {
       docs: 'Documentation',
     },
 
-    // Sidebar
     sidebar: {
       documentIndex: 'DOCUMENT_INDEX',
       language: 'Language',
-      german: 'Deutsch',
+      german: 'German',
       english: 'English',
+      loadStatus: 'LOAD_STATUS:',
+      ready: 'PRETEXT_ENGINE_READY',
     },
 
-    // Docs
     docs: {
-      title: 'Fachverband Knowledge Base',
-      subtitle: 'Research, analysis, and technical documentation for building diagnostics professionals. Cross-referenced with wikilinks for seamless navigation.',
-      search: 'Search documentation...',
-      allDocs: 'All Documents',
+      title: 'Fachverband Knowledge Archive',
+      subtitle:
+        'Professional documentation, analysis, and design references for building diagnostics. Wikilinks keep research and design systematically connected.',
+      searchResearch: 'Search research documents...',
+      searchDesign: 'Search design documents...',
       research: 'Research & Findings',
       design: 'Design & System',
+      documents: 'documents',
       noResults: 'No documents found. Try a different search query.',
       backToDocs: 'Back to Documentation',
       relatedDocs: 'Related Documentation',
@@ -143,14 +149,24 @@ export const translations = {
       pending: 'Pending',
       open: 'Open',
       about: 'About this Documentation',
-      aboutText: 'This Knowledge Base contains research, analysis, and technical documentation for Fachverband Bauwerksdiagnostik. All documents are interconnected with wikilinks.',
+      aboutText:
+        'The top navigation separates research and strategy material from the actual design and system references, keeping the knowledge base structured without breaking internal links.',
       wikiLinkFormat: 'WIKILINK FORMAT',
-      wikiLinkFormatText: 'Use [[page-name]] or [[page-name|Display Text]] to link to other documents.',
-      researchDesc: 'Competitive analysis, market research, ICP persona, market intelligence, and industry standards landscape. These documents form the foundation for all design decisions.',
-      designDesc: 'Design system plans, color directions, visual benchmarks, accessibility reports, and aesthetic strategies. All visual and interactive guidelines for the Fachverband platform.',
+      wikiLinkFormatText:
+        'Use, for example, [[competitive-analysis]] or [[independent-diagnostics-persona|Independent Diagnostics Persona]] to link to other documents.',
+      topicsText:
+        'The topic chips above the search field show the thematic clusters of the active section, making it easy to distinguish the design wiki from the research corpus.',
+      researchHeading: 'Research & Findings',
+      designHeading: 'Design & System',
+      notFound: 'Document not found',
+      notFoundBody: 'The requested document does not exist.',
+      area: 'Area',
+      date: 'Date',
+      scope: 'Scope',
+      displayedAs: 'Displayed as',
+      allTopics: 'topics',
     },
 
-    // Home
     home: {
       missionVision: 'Building Diagnostics: Scientific Analysis and Value Preservation.',
       diagnosticMethods: 'Diagnostic Methods',
@@ -158,25 +174,21 @@ export const translations = {
       marketStats: 'Market Statistics',
     },
 
-    // About
     about: {
       title: 'About Fachverband Bauwerksdiagnostik',
     },
 
-    // Expertise
     expertise: {
       title: 'Our Expertise',
       standards: 'Standards & Certifications',
     },
 
-    // Membership
     membership: {
       title: 'Membership',
       tiers: 'Membership Tiers',
       apply: 'Join Now',
     },
 
-    // Contact
     contact: {
       title: 'Contact',
       form: 'Contact Form',
@@ -186,16 +198,14 @@ export const translations = {
       message: 'Message',
     },
 
-    // Footer
     footer: {
       downloads: 'DOWNLOADS',
       legal: 'LEGAL_RECORDS',
-      impressum: 'IMPRESSUM',
+      impressum: 'IMPRINT',
       datenschutz: 'DATA PROTECTION',
       archive: 'ARCHIVE',
     },
 
-    // Common
     common: {
       loading: 'Loading...',
       error: 'An error occurred',

@@ -1,114 +1,142 @@
-
 import Layout from '@/components/Layout';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Zap, Droplets, Wind, Layers, Scan, Leaf } from 'lucide-react';
 
-const diagnosticMethods = [
-  {
-    id: 1,
-    label: 'Wärmeschutz',
-    description: 'Thermische Isolationsanalyse',
-    icon: Wind,
-  },
-  {
-    id: 2,
-    label: 'Feuchtebelastung',
-    description: 'Feuchte- und Schimmeldiagnostik',
-    icon: Droplets,
-  },
-  {
-    id: 3,
-    label: 'Schimmeldiagnostik',
-    description: 'Mikrobiologische Bewertung',
-    icon: Leaf,
-  },
-  {
-    id: 4,
-    label: 'Energiebedarf',
-    description: 'Energieleistungsanalyse',
-    icon: Zap,
-  },
-  {
-    id: 5,
-    label: 'Strukturanalyse',
-    description: 'Tragwerksuntersuchung',
-    icon: Layers,
-  },
-  {
-    id: 6,
-    label: 'Zerstörungsfreie Prüfung',
-    description: 'Nicht-invasive Messtechnik',
-    icon: Scan,
-  },
-];
+const methodIcons = [Wind, Droplets, Leaf, Zap, Layers, Scan];
 
-const missionPillars = [
-  {
-    title: 'Gesundheit schützen',
-    description: 'Sichere und gesunde Gebäudeumgebungen durch wissenschaftliche Diagnostik.',
+const copy = {
+  de: {
+    heroLabel: 'SEC_01 // MISSION_VISION',
+    heroTitle: 'Bauwerksdiagnostik: Wissenschaftliche Analyse und nachhaltige Werterhaltung.',
+    heroBody:
+      'Unabhängige und gewerkeübergreifende Begutachtung von Wärmeschutz, Energiebedarf, Feuchtebelastung und Schimmelschäden. Der Fachverband Bauwerksdiagnostik e.V. vernetzt zertifizierte Sachverständige für technische Exzellenz, Objektivität und belastbare Entscheidungsgrundlagen.',
+    registerCta: 'Expertenregister',
+    membershipCta: 'Mitgliedschaft beantragen',
+    methodsLabel: 'DOC: BWD_METHODS_v1',
+    methodsTitle: 'Sechs Kernmethoden der Bauwerksdiagnostik',
+    methods: [
+      ['Wärmeschutz', 'Thermische Analyse von Hülle, Wärmebrücken und Dämmqualität'],
+      ['Feuchtebelastung', 'Messung, Bewertung und Ursachensuche bei Feuchteschäden'],
+      ['Schimmeldiagnostik', 'Mikrobiologische Bewertung und Sanierungsgrundlagen'],
+      ['Energiebedarf', 'Energetische Leistung, Verbrauchsmuster und Modernisierungspotenziale'],
+      ['Strukturanalyse', 'Bewertung von Tragwerk, Rissen und Bauteilzuständen'],
+      ['Zerstörungsfreie Prüfung', 'Nicht-invasive Messtechnik für sichere Bestandsanalyse'],
+    ],
+    missionLabel: 'DOC: BWD_MISSION_v2',
+    missionTitle: 'Drei Säulen unserer Mission',
+    mission: [
+      ['Gesundheit schützen', 'Sichere und gesunde Gebäudeumgebungen durch nachvollziehbare Diagnostik.'],
+      ['Sicherheit gewährleisten', 'Strukturelle Integrität und verlässliche Bewertungen für Eigentümer, Gerichte und Bestandshalter.'],
+      ['Nachhaltigkeit fördern', 'Ressourceneffiziente Modernisierung und langfristige Werterhaltung im Gebäudebestand.'],
+    ],
+    marketLabel: 'DOC: BWD_MARKET_v1',
+    marketTitle: 'Marktpotenzial und Nachfrage',
+    stats: [
+      [
+        '14,8 Mrd. EUR',
+        'Geschätztes Marktvolumen Bauwerksdiagnostik',
+        'Prognostiziertes Marktvolumen für Diagnostik- und Inspektionsdienstleistungen in Deutschland bis 2030.',
+      ],
+      [
+        '35 Mio.',
+        'EU-Gebäude zur Sanierung bis 2050',
+        'Europäische Gebäude, die energetisch modernisiert werden müssen. Jedes Projekt benötigt belastbare Diagnostik.',
+      ],
+    ],
+    marketSubLabel: 'Deutscher Sanierungsmarkt',
+    marketSource: 'Quelle: Bundesverband Energieberatung',
+    marketLines: ['2025: EUR 240,7 Milliarden', '2030: EUR 295,5 Milliarden'],
   },
-  {
-    title: 'Sicherheit gewährleisten',
-    description: 'Strukturelle Integrität und Sicherheit durch unabhängige Bewertung.',
+  en: {
+    heroLabel: 'SEC_01 // MISSION_VISION',
+    heroTitle: 'Building diagnostics: scientific analysis and long-term asset preservation.',
+    heroBody:
+      'Independent, cross-discipline assessment of thermal performance, energy demand, moisture exposure, and mold damage. Fachverband Bauwerksdiagnostik e.V. connects certified experts around technical rigor, objectivity, and defensible findings.',
+    registerCta: 'Expert Directory',
+    membershipCta: 'Apply For Membership',
+    methodsLabel: 'DOC: BWD_METHODS_v1',
+    methodsTitle: 'Six core methods in building diagnostics',
+    methods: [
+      ['Thermal Protection', 'Thermal analysis of envelope performance, bridges, and insulation quality'],
+      ['Moisture Exposure', 'Measurement, evaluation, and root-cause analysis of moisture damage'],
+      ['Mold Diagnostics', 'Microbiological assessment and remediation guidance'],
+      ['Energy Demand', 'Energy performance, consumption patterns, and retrofit potential'],
+      ['Structural Analysis', 'Assessment of structure, cracking, and component condition'],
+      ['Non-Destructive Testing', 'Non-invasive measurement methods for safe condition analysis'],
+    ],
+    missionLabel: 'DOC: BWD_MISSION_v2',
+    missionTitle: 'Three pillars of our mission',
+    mission: [
+      ['Protect health', 'Safer, healthier buildings through verifiable diagnostics.'],
+      ['Ensure safety', 'Structural integrity and dependable assessments for owners, courts, and portfolio holders.'],
+      ['Advance sustainability', 'Resource-efficient modernization and long-term value preservation across the building stock.'],
+    ],
+    marketLabel: 'DOC: BWD_MARKET_v1',
+    marketTitle: 'Market potential and demand',
+    stats: [
+      [
+        'EUR 14.8B',
+        'Estimated building diagnostics market volume',
+        'Projected market volume for diagnostics and inspection services in Germany by 2030.',
+      ],
+      [
+        '35M',
+        'EU buildings to retrofit by 2050',
+        'European buildings that must be upgraded for energy performance. Every program depends on credible diagnostics.',
+      ],
+    ],
+    marketSubLabel: 'German retrofit market',
+    marketSource: 'Source: German Federal Association of Energy Consultants',
+    marketLines: ['2025: EUR 240.7 billion', '2030: EUR 295.5 billion'],
   },
-  {
-    title: 'Nachhaltigkeit fördern',
-    description: 'Ressourceneffiziente Gebäudemodernisierung und Langzeitwerterhaltung.',
-  },
-];
+} as const;
 
 export default function Home() {
+  const { language } = useLanguage();
+  const page = copy[language];
+
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="px-8 py-16 lg:py-24 bg-white border-b border-black">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <section className="border-b border-black bg-white px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-4">
-            <p className="section-label">SEC_01 // MISSION_VISION</p>
-            <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
-              Die Bauwerksdiagnostik: Wissenschaftliche Analyse und Werterhaltung.
+            <p className="section-label">{page.heroLabel}</p>
+            <h1
+              style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }}
+              className="leading-tight"
+            >
+              {page.heroTitle}
             </h1>
           </div>
 
-          <p className="text-lg lg:text-xl font-serif italic text-slate-700 max-w-3xl">
-            Unabhängige und gewerksübergreifende Begutachtung von Wärmeschutz, Energiebedarf, Feuchtebelastung und Schimmelschäden. Der Fachverband Bauwerksdiagnostik e.V. vereint zertifizierte Sachverständige für technische Exzellenz und Objektivität.
-          </p>
+          <p className="max-w-3xl text-lg text-slate-700 lg:text-xl">{page.heroBody}</p>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <div className="flex flex-col gap-4 pt-4 sm:flex-row">
             <a href="/bauwerksdiagnostiker-finden" className="btn-primary text-center">
-              EXPERTEN REGISTER
+              {page.registerCta}
             </a>
             <a href="/mitgliedschaft" className="btn-outline text-center">
-              MITGLIEDSCHAFT BEANTRAGEN
+              {page.membershipCta}
             </a>
           </div>
         </div>
       </section>
 
-      {/* Diagnostic Methods Grid */}
-      <section className="px-8 py-16 lg:py-24 bg-background">
-        <div className="max-w-6xl mx-auto space-y-8">
+      <section className="bg-background px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-6xl space-y-8">
           <div className="space-y-2">
-            <p className="section-label">DOC: BWD_METHODS_v1</p>
-            <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Sechs Kernmethoden der Bauwerksdiagnostik
-            </h2>
+            <p className="section-label">{page.methodsLabel}</p>
+            <h2 className="text-4xl font-serif font-normal lg:text-5xl">{page.methodsTitle}</h2>
           </div>
 
           <div className="card-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-            {diagnosticMethods.map((method) => {
-              const Icon = method.icon;
+            {page.methods.map(([label, description], index) => {
+              const Icon = methodIcons[index];
               return (
-                <div
-                  key={method.id}
-                  className="space-y-4" style={{ padding: '24px' }}
-                >
-                  <Icon className="w-10 h-10 text-primary" strokeWidth={1.5} />
-                  <h3 className="text-sm font-sans font-bold uppercase tracking-wider text-foreground">
-                    {method.label}
-                  </h3>
-                  <p className="text-sm font-serif italic text-slate-700">
-                    {method.description}
-                  </p>
+                <div key={label} className="space-y-4" style={{ padding: '24px' }}>
+                  <Icon className="h-10 w-10 text-primary" strokeWidth={1.5} />
+                  <h3 className="text-sm font-sans font-bold uppercase tracking-wider text-foreground">{label}</h3>
+                  <p className="text-sm text-slate-700">{description}</p>
                 </div>
               );
             })}
@@ -116,76 +144,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission Pillars */}
-      <section className="px-8 py-16 lg:py-24 bg-white border-y border-black">
-        <div className="max-w-6xl mx-auto space-y-12">
+      <section className="border-y border-black bg-white px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-6xl space-y-12">
           <div className="space-y-2">
-            <p className="section-label">DOC: BWD_MISSION_v2</p>
-            <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Drei Säulen unserer Mission
-            </h2>
+            <p className="section-label">{page.missionLabel}</p>
+            <h2 className="text-4xl font-serif font-normal lg:text-5xl">{page.missionTitle}</h2>
           </div>
 
           <div className="card-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-            {missionPillars.map((pillar, idx) => (
-              <div
-                key={idx}
-                className="space-y-4" style={{ padding: '24px' }}
-              >
-                <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-primary">
-                  {pillar.title}
-                </h3>
-                <p className="text-base font-serif italic text-slate-700 leading-relaxed">
-                  {pillar.description}
-                </p>
+            {page.mission.map(([title, description]) => (
+              <div key={title} className="space-y-4" style={{ padding: '24px' }}>
+                <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-primary">{title}</h3>
+                <p className="text-base leading-relaxed text-slate-700">{description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Market Statistics */}
-      <section className="px-8 py-16 lg:py-24 bg-background border-b border-black">
-        <div className="max-w-6xl mx-auto space-y-12">
+      <section className="border-b border-black bg-background px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-6xl space-y-12">
           <div className="space-y-2">
-            <p className="section-label">DOC: BWD_MARKET_v1</p>
-            <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Marktpotenzial & Nachfrage
-            </h2>
+            <p className="section-label">{page.marketLabel}</p>
+            <h2 className="text-4xl font-serif font-normal lg:text-5xl">{page.marketTitle}</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="border-2 border-black p-12 bg-white space-y-4">
-              <p className="font-mono text-5xl font-bold text-primary">14,8 Mrd. €</p>
-              <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">
-                Geschätztes Marktvolumen Bauwerksdiagnostik
-              </p>
-              <p className="text-sm font-serif italic text-slate-700">
-                Prognostiziertes Marktvolumen für Diagnostik- und Inspektionsdienstleistungen in Deutschland bis 2030.
-              </p>
-            </div>
-
-            <div className="border-2 border-black p-12 bg-white space-y-4">
-              <p className="font-mono text-5xl font-bold text-secondary">35 Mio.</p>
-              <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">
-                EU-Gebäude zur Sanierung bis 2050
-              </p>
-              <p className="text-sm font-serif italic text-slate-700">
-                Europäische Gebäude, die bis 2050 energetisch modernisiert werden müssen. Jedes erfordert Diagnostik.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+            {page.stats.map(([value, label, description], index) => (
+              <div key={index} className="space-y-4 border-2 border-black bg-white p-12">
+                <p className={`font-mono text-5xl font-bold ${index === 0 ? 'text-primary' : 'text-secondary'}`}>{value}</p>
+                <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">{label}</p>
+                <p className="text-sm text-slate-700">{description}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="border-2 border-black p-8 bg-white">
-            <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600 mb-3">
-              Deutscher Sanierungsmarkt
-            </p>
-            <div className="space-y-2 text-sm font-serif italic text-slate-700">
-              <p>2025: €240,7 Milliarden</p>
-              <p>2030: €295,5 Milliarden</p>
-              <p className="text-xs font-sans font-semibold uppercase tracking-wider text-slate-600 mt-3">
-                Quelle: Bundesverband Energieberatung
-              </p>
+          <div className="border-2 border-black bg-white p-8">
+            <p className="mb-3 text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">{page.marketSubLabel}</p>
+            <div className="space-y-2 text-sm text-slate-700">
+              {page.marketLines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+              <p className="mt-3 text-xs font-sans font-semibold uppercase tracking-wider text-slate-600">{page.marketSource}</p>
             </div>
           </div>
         </div>

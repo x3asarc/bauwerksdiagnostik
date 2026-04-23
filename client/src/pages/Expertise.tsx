@@ -1,134 +1,177 @@
 import { useState } from 'react';
 import Layout from '@/components/Layout';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { ChevronDown } from 'lucide-react';
 
-const standards = [
-  {
-    id: 1,
-    title: 'Bauphysik',
-    code: 'DOC: BWD_STDS_v4.02',
-    description: 'Thermische Isolierung, Feuchtemanagement und Energieleistung',
+const copy = {
+  de: {
+    heroTitle: 'Definition technischer Standards und Zertifizierungen.',
+    heroBody:
+      'Der Fachverband orientiert sich an anerkannten DIN-, EN- und ISO-Standards. Diese Normen sichern Qualität, Vergleichbarkeit und rechtliche Belastbarkeit in der Bauwerksdiagnostik.',
+    catalogTitle: 'Normenkatalog',
+    standardsLabel: 'Anwendbare Normen',
+    download: 'PDF herunterladen',
+    promoTitle: 'Zertifizierung zum Bauwerksdiagnostiker',
+    promoBody:
+      'Werden Sie zertifizierter Bauwerksdiagnostiker im Schulungs- und Zertifizierungsprogramm von TÜV Süd. Die Zertifizierung bestätigt Fachkompetenz in den relevanten Teilbereichen der Bauwerksdiagnostik.',
+    requirements: 'Anforderungen',
+    requirementsList: [
+      'Abgeschlossenes Hochschulstudium oder gleichwertige technische Qualifikation',
+      'Mindestens fünf Jahre Berufserfahrung im Bauwesen oder der Bestandsanalyse',
+      'Erfolgreiche Teilnahme am TÜV-Schulungsprogramm',
+      'Bestandene Zertifizierungsprüfung',
+    ],
+    cta: 'Zum TÜV Schulungsprogramm',
     standards: [
-      'DIN 4108 – Wärmeschutz und Energieeinsparung im Hochbau',
-      'EN ISO 9869 – Thermischer Widerstand und Wärmedurchgangskoeffizient',
-      'EN 13187 – Thermische Leistung von Fenstern durch Thermografie',
-      'DIN EN ISO 6946 – Bauteile – Wärmedurchlasswiderstand und Wärmedurchgangskoeffizient',
+      {
+        id: 1,
+        title: 'Bauphysik',
+        code: 'DOC: BWD_STDS_v4.02',
+        description: 'Thermische Isolierung, Feuchtemanagement und energetische Leistung',
+        items: [
+          'DIN 4108 - Wärmeschutz und Energieeinsparung im Hochbau',
+          'EN ISO 9869 - Thermischer Widerstand und Wärmedurchgangskoeffizient',
+          'EN 13187 - Thermische Leistung von Gebäuden durch Thermografie',
+          'DIN EN ISO 6946 - Bauteile - Wärmedurchlasswiderstand und Wärmedurchgangskoeffizient',
+        ],
+      },
+      {
+        id: 2,
+        title: 'Messtechnik',
+        code: 'DOC: BWD_STDS_v4.03',
+        description: 'Instrumentelle Verfahren und Messmethoden',
+        items: [
+          'ISO 9251 - Thermische Messungen in Gebäuden',
+          'EN 13829 - Blower-Door-Test zur Luftdichtheitsprüfung',
+          'DIN 68800 - Holzschutz - Anforderungen und Klassifizierung',
+          'EN ISO 12571 - Bestimmung der Feuchtesorptionseigenschaften',
+        ],
+      },
+      {
+        id: 3,
+        title: 'Gutachtenerstellung',
+        code: 'DOC: BWD_STDS_v4.04',
+        description: 'Berichtsstandards und rechtliche Anforderungen',
+        items: [
+          'DIN EN ISO/IEC 17020 - Anforderungen an Inspektionsstellen',
+          'DIN EN ISO/IEC 17025 - Kompetenzanforderungen an Prüf- und Kalibrierlaboratorien',
+          'Sachverständigenordnung (SVO) - Anforderungen an Sachverständige',
+          'HOAI - Honorarordnung für Architekten und Ingenieure',
+        ],
+      },
     ],
   },
-  {
-    id: 2,
-    title: 'Messtechnik',
-    code: 'DOC: BWD_STDS_v4.03',
-    description: 'Instrumentelle Verfahren und Messmethoden',
+  en: {
+    heroTitle: 'Defining technical standards and certifications.',
+    heroBody:
+      'The association aligns with recognized DIN, EN, and ISO standards. These frameworks ensure quality, comparability, and legal defensibility in building diagnostics.',
+    catalogTitle: 'Standards Catalog',
+    standardsLabel: 'Applicable Standards',
+    download: 'Download PDF',
+    promoTitle: 'Certification as a building diagnostician',
+    promoBody:
+      'Become a certified building diagnostician through the TUEV Sued training and certification program. The qualification confirms subject-matter competence across the core areas of building diagnostics.',
+    requirements: 'Requirements',
+    requirementsList: [
+      'Completed university degree or equivalent technical qualification',
+      'At least five years of professional experience in construction or condition analysis',
+      'Successful completion of the TUEV training program',
+      'Passed certification exam',
+    ],
+    cta: 'Go to TUEV training program',
     standards: [
-      'ISO 9251 – Thermische Messungen in Gebäuden',
-      'EN 13829 – Blower-Door-Test (Luftdichtheitsprüfung)',
-      'DIN 68800 – Holzschutz – Anforderungen und Klassifizierung',
-      'EN ISO 12571 – Bestimmung der Feuchtesorptionseigenschaften',
+      {
+        id: 1,
+        title: 'Building Physics',
+        code: 'DOC: BWD_STDS_v4.02',
+        description: 'Thermal insulation, moisture management, and energy performance',
+        items: [
+          'DIN 4108 - Thermal protection and energy savings in buildings',
+          'EN ISO 9869 - Thermal resistance and heat transfer coefficient',
+          'EN 13187 - Thermal performance of buildings by thermography',
+          'DIN EN ISO 6946 - Building components - Thermal resistance and heat transfer coefficient',
+        ],
+      },
+      {
+        id: 2,
+        title: 'Measurement Technology',
+        code: 'DOC: BWD_STDS_v4.03',
+        description: 'Instrument-based procedures and field measurement methods',
+        items: [
+          'ISO 9251 - Thermal measurements in buildings',
+          'EN 13829 - Blower door test for airtightness',
+          'DIN 68800 - Wood protection - Requirements and classification',
+          'EN ISO 12571 - Determination of moisture sorption properties',
+        ],
+      },
+      {
+        id: 3,
+        title: 'Expert Reporting',
+        code: 'DOC: BWD_STDS_v4.04',
+        description: 'Reporting standards and legal requirements',
+        items: [
+          'DIN EN ISO/IEC 17020 - Requirements for inspection bodies',
+          'DIN EN ISO/IEC 17025 - Competence requirements for testing and calibration laboratories',
+          'Expert ordinance (SVO) - Requirements for court-recognized experts',
+          'HOAI - Fee structure for architects and engineers',
+        ],
+      },
     ],
   },
-  {
-    id: 3,
-    title: 'Gutachtenerstellung',
-    code: 'DOC: BWD_STDS_v4.04',
-    description: 'Berichtsstandards und rechtliche Anforderungen',
-    standards: [
-      'DIN EN ISO/IEC 17020 – Anforderungen an die Tätigkeit von Inspektionsstellen',
-      'DIN EN ISO/IEC 17025 – Allgemeine Anforderungen an die Kompetenz von Prüf- und Kalibrierlaboratorien',
-      'Sachverständigenordnung (SVO) – Anforderungen an Sachverständige',
-      'HOAI – Honorarordnung für Architekten und Ingenieure',
-    ],
-  },
-];
+} as const;
 
 export default function Expertise() {
+  const { language } = useLanguage();
+  const page = copy[language];
   const [expandedId, setExpandedId] = useState<number | null>(null);
-
-  const toggleExpand = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="px-8 py-16 lg:py-24 bg-white border-b border-black">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <section className="border-b border-black bg-white px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-4">
             <p className="section-label">SEC_03</p>
             <h1 style={{ fontFamily: "'Public Sans', sans-serif", fontSize: '84px', fontWeight: 700, lineHeight: '88px', letterSpacing: '-0.025em' }} className="leading-tight">
-              Definition technischer Standards & Zertifizierungen.
+              {page.heroTitle}
             </h1>
           </div>
-
-          <p className="text-lg lg:text-xl font-serif italic text-slate-700 max-w-3xl">
-            Der Fachverband orientiert sich an international anerkannten DIN-, EN- und ISO-Standards. Diese Normen sichern Qualität, Vergleichbarkeit und Rechtssicherheit.
-          </p>
+          <p className="max-w-3xl text-lg text-slate-700 lg:text-xl">{page.heroBody}</p>
         </div>
       </section>
 
-      {/* Standards Accordion */}
-      <section className="px-8 py-16 lg:py-24 bg-background">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <section className="bg-background px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-2">
             <p className="section-label">DOC: BWD_STANDARDS_v1</p>
-            <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Normenkatalog
-            </h2>
+            <h2 className="text-4xl font-serif font-normal lg:text-5xl">{page.catalogTitle}</h2>
           </div>
 
           <div className="space-y-4">
-            {standards.map((standard) => (
-              <div
-                key={standard.id}
-                className="border-2 border-black bg-white overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleExpand(standard.id)}
-                  className="w-full px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors"
-                >
-                  <div className="text-left space-y-2">
-                    <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-foreground">
-                      {standard.title}
-                    </h3>
-                    <p className="text-xs font-mono text-slate-600">
-                      {standard.code}
-                    </p>
+            {page.standards.map((standard) => (
+              <div key={standard.id} className="overflow-hidden border-2 border-black bg-white">
+                <button onClick={() => setExpandedId(expandedId === standard.id ? null : standard.id)} className="flex w-full items-center justify-between px-8 py-6 transition-colors hover:bg-slate-50">
+                  <div className="space-y-2 text-left">
+                    <h3 className="text-lg font-sans font-bold uppercase tracking-wider text-foreground">{standard.title}</h3>
+                    <p className="text-xs font-mono text-slate-600">{standard.code}</p>
                   </div>
-                  <ChevronDown
-                    className={`w-6 h-6 text-primary flex-shrink-0 transition-transform ${
-                      expandedId === standard.id ? 'rotate-180' : ''
-                    }`}
-                  />
+                  <ChevronDown className={`h-6 w-6 flex-shrink-0 text-primary transition-transform ${expandedId === standard.id ? 'rotate-180' : ''}`} />
                 </button>
-
                 {expandedId === standard.id && (
-                  <div className="border-t-2 border-black px-8 py-6 bg-slate-50 space-y-4">
-                    <p className="text-base font-serif italic text-slate-700">
-                      {standard.description}
-                    </p>
-
-                    <div className="border-t border-black pt-4 space-y-3">
-                      <p className="text-xs font-sans font-semibold uppercase tracking-wider text-slate-600">
-                        Anwendbare Normen
-                      </p>
+                  <div className="space-y-4 border-t-2 border-black bg-slate-50 px-8 py-6">
+                    <p className="text-base text-slate-700">{standard.description}</p>
+                    <div className="space-y-3 border-t border-black pt-4">
+                      <p className="text-xs font-sans font-semibold uppercase tracking-wider text-slate-600">{page.standardsLabel}</p>
                       <ul className="space-y-2">
-                        {standard.standards.map((norm, idx) => (
-                          <li
-                            key={idx}
-                            className="text-sm font-serif italic text-slate-700 pl-4 border-l-2 border-primary"
-                          >
-                            {norm}
+                        {standard.items.map((item) => (
+                          <li key={item} className="border-l-2 border-primary pl-4 text-sm text-slate-700">
+                            {item}
                           </li>
                         ))}
                       </ul>
                     </div>
-
                     <div className="border-t border-black pt-4">
-                      <a
-                        href="#"
-                        className="inline-block text-sm font-sans font-semibold uppercase tracking-wider text-primary hover:underline"
-                      >
-                        PDF herunterladen
+                      <a href="#" className="inline-block text-sm font-sans font-semibold uppercase tracking-wider text-primary hover:underline">
+                        {page.download}
                       </a>
                     </div>
                   </div>
@@ -139,41 +182,26 @@ export default function Expertise() {
         </div>
       </section>
 
-      {/* TÜV Certification Promo */}
-      <section className="px-8 py-16 lg:py-24 bg-white border-y border-black">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <section className="border-y border-black bg-white px-8 py-16 lg:py-24">
+        <div className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-2">
             <p className="section-label">DOC: BWD_CERT_PROMO_v1</p>
-            <h2 className="text-4xl lg:text-5xl font-serif font-normal">
-              Zertifizierung zum Bauwerksdiagnostiker
-            </h2>
+            <h2 className="text-4xl font-serif font-normal lg:text-5xl">{page.promoTitle}</h2>
           </div>
 
-          <div className="border-2 border-black p-12 bg-white space-y-6">
-            <p className="text-lg font-serif italic text-slate-700">
-              Werden Sie zertifizierter Bauwerksdiagnostiker durch das TÜV Süd Schulungs- und Zertifizierungsprogramm. Die Zertifizierung bescheinigt Ihre Fachkompetenz in allen Bereichen der Bauwerksdiagnostik.
-            </p>
-
-            <div className="border-t border-black pt-6 space-y-3">
-              <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">
-                Anforderungen
-              </p>
-              <ul className="space-y-2 text-sm font-serif italic text-slate-700">
-                <li>• Abgeschlossenes Hochschulstudium (Bauingenieurwesen, Architektur, Physik o.ä.)</li>
-                <li>• Mindestens 5 Jahre Berufserfahrung im Bauwesen</li>
-                <li>• Erfolgreiche Teilnahme am TÜV Schulungsprogramm</li>
-                <li>• Bestandene Zertifizierungsprüfung</li>
+          <div className="space-y-6 border-2 border-black bg-white p-12">
+            <p className="text-lg text-slate-700">{page.promoBody}</p>
+            <div className="space-y-3 border-t border-black pt-6">
+              <p className="text-sm font-sans font-semibold uppercase tracking-wider text-slate-600">{page.requirements}</p>
+              <ul className="space-y-2 text-sm text-slate-700">
+                {page.requirementsList.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
               </ul>
             </div>
-
             <div className="border-t border-black pt-6">
-              <a
-                href="https://www.tuv-sued.de"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-primary text-white font-sans font-semibold uppercase tracking-wider border-2 border-black transition-colors hover:opacity-90"
-              >
-                Zu TÜV Schulungsprogramm
+              <a href="https://www.tuv-sued.de" target="_blank" rel="noopener noreferrer" className="inline-block border-2 border-black bg-primary px-6 py-3 font-sans font-semibold uppercase tracking-wider text-white transition-colors hover:opacity-90">
+                {page.cta}
               </a>
             </div>
           </div>

@@ -1,0 +1,11 @@
+.git
+.gitignore
+.manus-logs
+.playwright-cli
+node_modules
+dist
+output
+tmp
+dev-stdout.log
+dev-stderr.log
+*.png

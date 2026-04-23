@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import Layout from '@/components/Layout';
 import { Search, Beaker, Palette } from 'lucide-react';
-import { getDocsByCategory } from '@/lib/docsData';
+import { getDocsByCategory, localizeDocPage } from '@/lib/docsData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 import { Link } from 'wouter';
 
 type DocsTab = 'research' | 'design';
@@ -9,8 +11,9 @@ type DocsTab = 'research' | 'design';
 export default function DocsHub() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<DocsTab>('research');
-  const researchDocs = getDocsByCategory('research');
-  const designDocs = getDocsByCategory('design');
+  const { language } = useLanguage();
+  const researchDocs = getDocsByCategory('research').map((doc) => localizeDocPage(doc, language));
+  const designDocs = getDocsByCategory('design').map((doc) => localizeDocPage(doc, language));
   const activeDocs = activeTab === 'research' ? researchDocs : designDocs;
 
   const filteredDocs = useMemo(
@@ -36,13 +39,12 @@ export default function DocsHub() {
               style={{ fontFamily: "'Public Sans', sans-serif", fontWeight: 700, letterSpacing: '-0.025em' }}
               className="text-4xl sm:text-5xl lg:text-7xl leading-tight lg:leading-[0.95]"
             >
-              Fachverband Wissensarchiv
+              {t(language, 'docs.title')}
             </h1>
           </div>
 
           <p className="max-w-3xl text-base font-serif text-slate-700 sm:text-lg lg:text-xl">
-            Fachliche Dokumentation, Analysen und Designreferenzen für die Bauwerksdiagnostik.
-            Über Wikilinks bleiben Recherche und Gestaltung systematisch miteinander verbunden.
+            {t(language, 'docs.subtitle')}
           </p>
 
           <div className="space-y-4 border-t border-black pt-6">
@@ -57,9 +59,11 @@ export default function DocsHub() {
                 }`}
               >
                 <span className="block font-sans text-xs font-semibold uppercase tracking-[0.2em]">
-                  Forschung & Erkenntnisse
+                  {t(language, 'docs.research')}
                 </span>
-                <span className="mt-1 block font-serif text-lg">{researchDocs.length} Dokumente</span>
+                <span className="mt-1 block font-serif text-lg">
+                  {researchDocs.length} {t(language, 'docs.documents')}
+                </span>
               </button>
 
               <button
@@ -72,9 +76,11 @@ export default function DocsHub() {
                 }`}
               >
                 <span className="block font-sans text-xs font-semibold uppercase tracking-[0.2em]">
-                  Design & System
+                  {t(language, 'docs.design')}
                 </span>
-                <span className="mt-1 block font-serif text-lg">{designDocs.length} Dokumente</span>
+                <span className="mt-1 block font-serif text-lg">
+                  {designDocs.length} {t(language, 'docs.documents')}
+                </span>
               </button>
             </div>
 
@@ -98,7 +104,7 @@ export default function DocsHub() {
             <Search className="absolute left-4 top-3 h-5 w-5 text-slate-600" />
             <input
               type="text"
-              placeholder={activeTab === 'design' ? 'Designdokumente durchsuchen...' : 'Forschungsdokumente durchsuchen...'}
+              placeholder={activeTab === 'design' ? t(language, 'docs.searchDesign') : t(language, 'docs.searchResearch')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full border-2 border-black bg-white py-3 pl-12 pr-4 font-serif text-base focus:outline-none focus:ring-2 focus:ring-primary"
@@ -115,16 +121,14 @@ export default function DocsHub() {
             </p>
             <h2 className="text-3xl font-serif font-normal sm:text-4xl lg:text-5xl">
               {activeTab === 'design'
-                ? `Design & System (${filteredDocs.length})`
-                : `Forschung & Erkenntnisse (${filteredDocs.length})`}
+                ? `${t(language, 'docs.designHeading')} (${filteredDocs.length})`
+                : `${t(language, 'docs.researchHeading')} (${filteredDocs.length})`}
             </h2>
           </div>
 
           {filteredDocs.length === 0 ? (
             <div className="border-2 border-black bg-slate-50 p-8 text-center sm:p-12">
-              <p className="text-lg font-serif text-slate-700">
-                Keine Dokumente gefunden. Versuchen Sie eine andere Suchanfrage.
-              </p>
+              <p className="text-lg font-serif text-slate-700">{t(language, 'docs.noResults')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-px bg-black p-px">
@@ -143,7 +147,7 @@ export default function DocsHub() {
                           {doc.title}
                         </h3>
                         <p className="mb-3 text-xs font-mono text-slate-600 sm:text-sm">
-                          {doc.categoryLabel}
+                          {doc.category === 'research' ? t(language, 'docs.research') : t(language, 'docs.design')}
                           {doc.topic && <span> • {doc.topic}</span>}
                           {doc.scope && <span> • {doc.scope}</span>}
                         </p>
@@ -162,29 +166,20 @@ export default function DocsHub() {
         <div className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-2">
             <p className="section-label">DOC: BWD_WIKI_INFO_v1</p>
-            <h2 className="text-2xl font-serif font-normal sm:text-3xl">Über diese Dokumentation</h2>
+            <h2 className="text-2xl font-serif font-normal sm:text-3xl">{t(language, 'docs.about')}</h2>
           </div>
 
           <div className="space-y-6 text-base font-serif text-slate-700">
-            <p>
-              Die obere Navigation trennt die Forschungs- und Strategiedokumente von den eigentlichen
-              Design- und Systemreferenzen. So bleibt die Wissensbasis logisch sortiert, ohne die
-              interne Verlinkung zu verlieren.
-            </p>
+            <p>{t(language, 'docs.aboutText')}</p>
 
             <div className="border-l-4 border-primary bg-white py-4 pl-4 sm:pl-6">
-              <p className="mb-2 font-sans font-bold uppercase tracking-wider text-primary">Wikilink-Format</p>
-              <p className="break-words font-mono text-sm text-slate-600">
-                Verwenden Sie zum Beispiel [[competitive-analysis]] oder
-                [[independent-diagnostics-persona|Independent Diagnostics Persona]], um auf andere
-                Dokumente zu verlinken.
+              <p className="mb-2 font-sans font-bold uppercase tracking-wider text-primary">
+                {t(language, 'docs.wikiLinkFormat')}
               </p>
+              <p className="break-words font-mono text-sm text-slate-600">{t(language, 'docs.wikiLinkFormatText')}</p>
             </div>
 
-            <p>
-              Die Themenchips oberhalb der Suche zeigen die inhaltlichen Cluster des aktiven Bereichs.
-              Damit lässt sich die Design-Wiki schnell vom Forschungsbestand abgrenzen.
-            </p>
+            <p>{t(language, 'docs.topicsText')}</p>
           </div>
         </div>
       </section>

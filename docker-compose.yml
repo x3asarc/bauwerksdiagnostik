@@ -1,0 +1,16 @@
+services:
+  bauwerksdiagnostik:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_ANALYTICS_ENDPOINT: ${VITE_ANALYTICS_ENDPOINT:-}
+        VITE_ANALYTICS_WEBSITE_ID: ${VITE_ANALYTICS_WEBSITE_ID:-}
+    image: bauwerksdiagnostik:latest
+    container_name: bauwerksdiagnostik
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
